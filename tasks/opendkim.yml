@@ -1,13 +1,25 @@
 ---
+
+- name: opendkim | set user and group variables
+  set_fact:
+    opendkim_user: opendkim
+    opendkim_group: opendkim
+
 - name: opendkim | install mail-filter/opendkim
-  portage: package=mail-filter/opendkim
+  apt: name=opendkim state=present
+  apt: name=opendkim-tools state=present
   tags: [packages, install]
+
+- name: opendkim | create opendkim directory
+  file: >
+    state=directory
+    path=/etc/opendkim
 
 - name: opendkim | create keys directories
   file: >
     state=directory
     path=/etc/opendkim/keys/{{ item }}
-    group=milter owner=milter mode=0700
+    group={{opendkim_group}} owner={{opendkim_user}} mode=0700
   with_items: mailsrv_virtual_domains
   tags: install
 
@@ -15,7 +27,7 @@
   template: >
     src=opendkim/{{ item }}.j2
     dest=/etc/opendkim/{{ item }}
-    owner=milter group=milter mode=0600
+    owner={{opendkim_user}} group={{opendkim_group}} mode=0600
   with_items:
     - opendkim.conf
     - KeyTable
@@ -29,7 +41,7 @@
 - name: opendkim | add postfix to group milter
   user: >
     name=postfix
-    groups=milter
+    groups={{opendkim_group}}
     append=yes
   tags: [accounts, config]
 
@@ -46,5 +58,5 @@
     state=directory
     path=/etc/opendkim/keys
     recurse=yes
-    group=milter owner=milter
+    group={{opendkim_group}} owner={{opendkim_user}}
   tags: [keys, config]
