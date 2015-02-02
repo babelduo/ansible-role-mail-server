@@ -1,6 +1,9 @@
 ---
 - name: dovecot | install net-mail/dovecot
-  portage: package=net-mail/dovecot
+  apt: name=dovecot-core state=present
+  apt: name=dovecot-imapd state=present
+  apt: name=dovecot-managesieved state=present
+  apt: name=dovecot-sieve state=present
   tags: [packages, install]
   # USE: net-mail/dovecot imapc ldap managesieve sieve (solr)
 

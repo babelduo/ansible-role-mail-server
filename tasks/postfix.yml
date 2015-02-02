@@ -1,6 +1,6 @@
 ---
 - name: postfix | install mail-mta/postfix
-  portage: package=mail-mta/postfix
+  apt: name=postfix state=present
   tags: [packages, install]
   # USE: mail-mta/postfix dovecot-sasl ldap
 
