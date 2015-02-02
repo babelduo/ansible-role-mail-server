@@ -1,7 +1,7 @@
 Ansible role for a mail server
 ==============================
 
-This role installs Postfix (MTA), Dovecot (IMAP), DSPAM (antispam), ClamAV (antivirus) and OpenDKIM on Gentoo Linux *.
+This role installs Postfix (MTA), Dovecot (IMAP), DSPAM (antispam), ClamAV (antivirus) and OpenDKIM on Ubuntu Linux *.
 
 If you need also a web interface (aka webmail), then try my [other role](https://github.com/jirutka/ansible-role-roundcube) to install [Roundcube](http://roundcube.net/).
 
